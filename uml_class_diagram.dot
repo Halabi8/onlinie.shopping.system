@@ -1,0 +1,51 @@
+
+digraph UML {
+ graph [rankdir=TB, splines=ortho, nodesep=0.45, ranksep=0.8, bgcolor="white", pad=0.25, label="ONLINE SHOPPING SYSTEM — UML CLASS DIAGRAM", labelloc=t, fontsize=22, fontname="Arial"];
+ node [shape=plain, fontname="Arial"];
+ edge [fontname="Arial", fontsize=10, color="#334155", arrowsize=0.8];
+ Customer [label=<
+ <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5" COLOR="#334155">
+ <TR><TD BGCOLOR="#dbeafe"><B>Customer</B></TD></TR><HR/>
+ <TR><TD ALIGN="LEFT">- customerId: int<BR ALIGN="LEFT"/>- name: String<BR ALIGN="LEFT"/>- email: String<BR ALIGN="LEFT"/>- address: String</TD></TR><HR/>
+ <TR><TD ALIGN="LEFT">+ register(): void<BR ALIGN="LEFT"/>+ updateProfile(): void</TD></TR></TABLE>>];
+ Product [label=<
+ <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5" COLOR="#334155">
+ <TR><TD BGCOLOR="#dcfce7"><B>Product</B></TD></TR><HR/>
+ <TR><TD ALIGN="LEFT">- productId: int<BR ALIGN="LEFT"/>- name: String<BR ALIGN="LEFT"/>- price: double<BR ALIGN="LEFT"/>- stockQuantity: int</TD></TR><HR/>
+ <TR><TD ALIGN="LEFT">+ displayDetails(): void<BR ALIGN="LEFT"/>+ updateStock(quantity: int): void</TD></TR></TABLE>>];
+ ShoppingCart [label=<
+ <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5" COLOR="#334155">
+ <TR><TD BGCOLOR="#fef3c7"><B>ShoppingCart</B></TD></TR><HR/>
+ <TR><TD ALIGN="LEFT">- cartId: int<BR ALIGN="LEFT"/>- totalAmount: double</TD></TR><HR/>
+ <TR><TD ALIGN="LEFT">+ addItem(product: Product, quantity: int): void<BR ALIGN="LEFT"/>+ removeItem(item: CartItem): void<BR ALIGN="LEFT"/>+ calculateTotal(): double</TD></TR></TABLE>>];
+ CartItem [label=<
+ <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5" COLOR="#334155">
+ <TR><TD BGCOLOR="#fef3c7"><B>CartItem</B></TD></TR><HR/>
+ <TR><TD ALIGN="LEFT">- quantity: int<BR ALIGN="LEFT"/>- unitPrice: double</TD></TR><HR/>
+ <TR><TD ALIGN="LEFT">+ calculateSubtotal(): double</TD></TR></TABLE>>];
+ Order [label=<
+ <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5" COLOR="#334155">
+ <TR><TD BGCOLOR="#ede9fe"><B>Order</B></TD></TR><HR/>
+ <TR><TD ALIGN="LEFT">- orderId: int<BR ALIGN="LEFT"/>- orderDate: Date<BR ALIGN="LEFT"/>- status: String<BR ALIGN="LEFT"/>- totalAmount: double</TD></TR><HR/>
+ <TR><TD ALIGN="LEFT">+ placeOrder(): void<BR ALIGN="LEFT"/>+ cancelOrder(): void<BR ALIGN="LEFT"/>+ calculateTotal(): double</TD></TR></TABLE>>];
+ OrderItem [label=<
+ <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5" COLOR="#334155">
+ <TR><TD BGCOLOR="#ede9fe"><B>OrderItem</B></TD></TR><HR/>
+ <TR><TD ALIGN="LEFT">- quantity: int<BR ALIGN="LEFT"/>- unitPrice: double</TD></TR><HR/>
+ <TR><TD ALIGN="LEFT">+ calculateSubtotal(): double</TD></TR></TABLE>>];
+ Payment [label=<
+ <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5" COLOR="#334155">
+ <TR><TD BGCOLOR="#fee2e2"><B>Payment</B></TD></TR><HR/>
+ <TR><TD ALIGN="LEFT">- paymentId: int<BR ALIGN="LEFT"/>- amount: double<BR ALIGN="LEFT"/>- method: String<BR ALIGN="LEFT"/>- paymentDate: Date<BR ALIGN="LEFT"/>- status: String</TD></TR><HR/>
+ <TR><TD ALIGN="LEFT">+ processPayment(): boolean<BR ALIGN="LEFT"/>+ refundPayment(): boolean</TD></TR></TABLE>>];
+ {rank=same; Customer; Product}
+ {rank=same; ShoppingCart; Order}
+ {rank=same; CartItem; OrderItem; Payment}
+ Customer -> ShoppingCart [dir=none, label="1                 1"];
+ Customer -> Order [dir=none, label="1                 0..*"];
+ ShoppingCart -> CartItem [dir=both, arrowtail=diamond, arrowhead=none, label="1                 0..*"];
+ Product -> CartItem [dir=none, label="1                 0..*"];
+ Order -> OrderItem [dir=both, arrowtail=diamond, arrowhead=none, label="1                 1..*"];
+ Product -> OrderItem [dir=none, label="1                 0..*"];
+ Order -> Payment [dir=none, label="1                 0..1"];
+}
